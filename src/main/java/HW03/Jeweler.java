@@ -1,5 +1,6 @@
 package HW03;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,7 +8,6 @@ public class Jeweler {
 
     private ArrayList<Mineral> stonesList;
     private ArrayList<Mineral> necklace;
-    private Scanner in = new Scanner(System.in);
 
     public Jeweler() {
         stonesList = new ArrayList<Mineral>();
@@ -31,74 +31,97 @@ public class Jeweler {
         stonesList.add(new Topaz(1.25, 3, 3));
     }
 
-    public void openShop(){
+    public void openShop() {
 
+        System.out.println("How can I help You? ");
         System.out.println("1. Make new necklace.");
-        System.out.println("2. Count gem's total cost and total weight.");
-        System.out.println("3. Sort gems by value.");
-        System.out.println("4. Search gems by clarity.");
-        System.out.println("How can I help You: ");
+        System.out.println("2. Count gem's total cost.");
+        System.out.println("3. Count gem's total weight.");
+        System.out.println("4. Sort gems by value.");
+        System.out.println("5. Search gems by clarity.");
 
+
+        Scanner in = new Scanner(System.in);
         int input = in.nextInt();
 
-        switch (input){
-            case(1): selectGems(stonesList);
-            break;
-            case(2):
+        switch (input) {
+            case (1):
+                selectGems(stonesList);
+                break;
+            case (2):
                 countTotalCost(necklace);
+                break;
+            case (3):
                 countTotalWeight(necklace);
-            break;
+                break;
             default:
                 System.out.println("Sorry, but i cant help you with this");
         }
+
+        in.close();
     }
 
-    private void selectGems(ArrayList<Mineral> list){
+    private void selectGems(ArrayList<Mineral> list) {
 
-        for (int i = 1; i < list.size() ; i++) {
-            System.out.print(i +". ");
+        for (int i = 1; i < list.size(); i++) {
+            System.out.print(i + ". ");
             list.get(i).getDescription();
         }
         System.out.println("Select gems for your necklace: ");
-        String input = in.nextLine();
+        Scanner in = new Scanner(System.in);
+        String[] input = in.nextLine().split(",");
+        makeNecklace(input);
+        in.close();
     }
 
-    private void makeNecklace(String ... input){
+    private void makeNecklace(String[] input) {
 
         necklace = new ArrayList<Mineral>();
 
-        for (String i: input) {
+        for (String i : input) {
             int index = Integer.parseInt(i);
             necklace.add(stonesList.get(index));
         }
-
-        for (Mineral mineral: necklace) {
+        System.out.println("Now your necklace has: ");
+        for (Mineral mineral : necklace) {
             mineral.getDescription();
         }
+        openShop();
     }
 
-    private double countTotalCost(ArrayList list){
-
+    private void countTotalCost(ArrayList<Mineral> list) {
         double totalCost = 0.0;
-        for (Object a: list) {
-            totalCost += ((Mineral) a).getValue();
+        try {
+            for (Mineral a : list) {
+                totalCost += a.getValue();
+            }
+            System.out.println(totalCost*1000 + "$");
+        } catch (Exception e) {
+            System.err.println("You should make necklace before");
+        } finally {
+            openShop();
         }
-        return totalCost;
     }
 
-    private double countTotalWeight(ArrayList list){
+    private void countTotalWeight(ArrayList<Mineral> list) {
         double totalWeight = 0.0;
-        for (Object a: list) {
-            totalWeight += ((Mineral) a).getCarat();
+         try {
+            for (Mineral a : list) {
+                totalWeight += a.getCarat();
+            }
+            System.out.println(totalWeight + " carat");
+        } catch (Exception e) {
+            System.err.println("You should make necklace before");
         }
-        return totalWeight;
+        openShop();
     }
 
-    private ArrayList sortByValue (ArrayList list) {
+    private ArrayList sortByValue(ArrayList list) {
         return list;
     }
 
     private ArrayList searchByClarity(ArrayList list) {
         return list;
     }
+
 }
