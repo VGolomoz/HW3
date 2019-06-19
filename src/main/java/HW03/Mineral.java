@@ -1,6 +1,6 @@
 package HW03;
 
-public abstract class Mineral {
+public abstract class Mineral implements Comparable<Mineral>{
 
     String name;
     double carat;
@@ -10,9 +10,9 @@ public abstract class Mineral {
 
     public abstract double getCarat();
 
-    public abstract double getValue();
+    public abstract Double getValue();
 
-    public abstract double getCategory();
+    public abstract int getClarity();
 
     public abstract String getName();
 
@@ -42,5 +42,4 @@ public abstract class Mineral {
         }
         return color;
     }
-
 }

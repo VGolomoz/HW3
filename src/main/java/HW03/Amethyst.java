@@ -1,6 +1,6 @@
 package HW03;
 
-public class Amethyst extends Mineral {
+public class Amethyst extends Quartz {
 
     private String name = "amethyst";
     private double category = 0.5;
@@ -8,7 +8,7 @@ public class Amethyst extends Mineral {
     private int colorValue;
     private int clarityValue;
 
-    public Amethyst(double carat, int colorValue, int clarityValue){
+    public Amethyst(double carat, int colorValue, int clarityValue) {
         this.carat = carat;
         this.colorValue = colorValue;
         this.clarityValue = clarityValue;
@@ -18,13 +18,13 @@ public class Amethyst extends Mineral {
         return carat;
     }
 
-    public double getValue() {
-        double value = category*(carat*(colorValue + clarityValue));
+    public Double getValue() {
+        double value = category * carat * clarityValue + colorValue;
         return value;
     }
 
-    public double getCategory() {
-        return category;
+    public int getClarity() {
+        return clarityValue;
     }
 
     public String getName() {
@@ -33,8 +33,13 @@ public class Amethyst extends Mineral {
 
     public void getDescription() {
         String categoryName;
-        if(category == 1) categoryName = "precious stone";
+        if (category == 1) categoryName = "precious stone";
         else categoryName = "semiprecious stone";
-        System.out.println("CATEGORY: " + categoryName + " GEMSTONE: " + name + " CARAT: " + carat + " COLOR: " + Mineral.getColor(colorValue) + " CLARITY: " + clarityValue);
+        System.out.println("CATEGORY: " + categoryName + " GEMSTONE: " + name + " CARAT: " + carat + " COLOR: "
+                + Mineral.getColor(colorValue) + " CLARITY: " + clarityValue + " Value: " + getValue() * 100 + " $");
+    }
+
+    public int compareTo(Mineral o) {
+        return getValue().compareTo(o.getValue());
     }
 }

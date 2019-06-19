@@ -1,6 +1,6 @@
 package HW03;
 
-public class Aquamarine extends Mineral {
+public class Aquamarine extends Beryl {
 
     private String name = "aquamarine";
     private double category = 0.5;
@@ -18,13 +18,13 @@ public class Aquamarine extends Mineral {
         return carat;
     }
 
-    public double getValue() {
-        double value = category*(carat*(colorValue + clarityValue));
+    public Double getValue() {
+        double value = category*carat*clarityValue+colorValue;
         return value;
     }
 
-    public double getCategory() {
-        return category;
+    public int getClarity() {
+        return clarityValue;
     }
 
     public String getName() {
@@ -35,6 +35,11 @@ public class Aquamarine extends Mineral {
         String categoryName;
         if(category == 1) categoryName = "precious stone";
         else categoryName = "semiprecious stone";
-        System.out.println("CATEGORY: " + categoryName + " GEMSTONE: " + name + " CARAT: " + carat + " COLOR: " + Mineral.getColor(colorValue) + " CLARITY: " + clarityValue);
+        System.out.println("CATEGORY: " + categoryName + " GEMSTONE: " + name + " CARAT: " + carat + " COLOR: "
+                + Mineral.getColor(colorValue) + " CLARITY: " + clarityValue + " Value: " + getValue()*100 + " $");
+    }
+
+    public int compareTo(Mineral o) {
+        return getValue().compareTo(o.getValue());
     }
 }

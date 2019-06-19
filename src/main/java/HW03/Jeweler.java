@@ -1,7 +1,7 @@
 package HW03;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Jeweler {
@@ -14,11 +14,11 @@ public class Jeweler {
 
         stonesList.add(new Diamond(0.5, 7, 8));
         stonesList.add(new Diamond(0.5, 5, 5));
-        stonesList.add(new Amethyst(1.0, 0, 1));
-        stonesList.add(new Amethyst(2.0, 1, 0));
-        stonesList.add(new Aquamarine(1.5, 4, 4));
-        stonesList.add(new Aquamarine(2.0, 1, 6));
-        stonesList.add(new Aquamarine(0.02, 7, 9));
+        stonesList.add(new Amethyst(1.0, 7, 1));
+        stonesList.add(new Amethyst(2.0, 7, 0));
+        stonesList.add(new Aquamarine(1.5, 5, 4));
+        stonesList.add(new Aquamarine(2.0, 5, 6));
+        stonesList.add(new Aquamarine(0.02, 5, 9));
         stonesList.add(new Citrine(0.05, 6, 5));
         stonesList.add(new Citrine(3.05, 3, 7));
         stonesList.add(new Emerald(4.0, 4, 10));
@@ -54,6 +54,16 @@ public class Jeweler {
             case (3):
                 countTotalWeight(necklace);
                 break;
+            case (4):
+                sortByValue(necklace);
+                break;
+            case (5):
+                System.out.println("Select the lower limit of the range: ");
+                int min = in.nextInt();
+                System.out.println("Select the upper limit of the range: ");
+                int max = in.nextInt();
+                searchByClarity(necklace, min, max);
+                break;
             default:
                 System.out.println("Sorry, but i cant help you with this");
         }
@@ -86,6 +96,7 @@ public class Jeweler {
         for (Mineral mineral : necklace) {
             mineral.getDescription();
         }
+        System.out.println("=================================================================================");
         openShop();
     }
 
@@ -95,33 +106,67 @@ public class Jeweler {
             for (Mineral a : list) {
                 totalCost += a.getValue();
             }
-            System.out.println(totalCost*1000 + "$");
+            System.out.println(totalCost * 100 + "$");
         } catch (Exception e) {
             System.err.println("You should make necklace before");
         } finally {
+            System.out.println("=================================================================================");
             openShop();
         }
     }
 
     private void countTotalWeight(ArrayList<Mineral> list) {
         double totalWeight = 0.0;
-         try {
+        try {
             for (Mineral a : list) {
                 totalWeight += a.getCarat();
             }
             System.out.println(totalWeight + " carat");
         } catch (Exception e) {
             System.err.println("You should make necklace before");
+        } finally {
+            System.out.println("=================================================================================");
+            openShop();
         }
-        openShop();
+
     }
 
-    private ArrayList sortByValue(ArrayList list) {
-        return list;
+    private void sortByValue(ArrayList<Mineral> list) {
+        try {
+            Collections.sort(list);
+            for (Mineral x : list) {
+                x.getDescription();
+            }
+        } catch (Exception e) {
+            System.err.println("You should make necklace before");
+        } finally {
+            System.out.println("=================================================================================");
+            openShop();
+        }
     }
 
-    private ArrayList searchByClarity(ArrayList list) {
-        return list;
-    }
+    private void searchByClarity(ArrayList<Mineral> list, int min, int max) {
 
+        ArrayList<Mineral> clarityGems = new ArrayList<Mineral>();
+        try {
+            for (Mineral mineral : list) {
+                if ((mineral.getClarity() >= min) && (mineral.getClarity() <= max)) clarityGems.add(mineral);
+                else continue;
+            }
+
+            if (!clarityGems.isEmpty()) {
+                for (Mineral mineral : clarityGems) {
+                    mineral.getDescription();
+                }
+            } else {
+                System.out.println("There is no gems with given parameters");
+            }
+        } catch (Exception e) {
+            System.err.println("You should make necklace before");
+        } finally {
+
+            System.out.println("=================================================================================");
+            openShop();
+        }
+    }
 }

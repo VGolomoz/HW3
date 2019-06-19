@@ -1,6 +1,6 @@
 package HW03;
 
-public class Sapphire extends Mineral{
+public class Sapphire extends Corundum {
 
     private String name = "sapphire";
     private double category = 1.0;
@@ -18,14 +18,14 @@ public class Sapphire extends Mineral{
         return carat;
     }
 
-    public double getValue() {
+    public Double getValue() {
 
-        double value = category*(carat*(colorValue + clarityValue));
+        double value = category*carat*colorValue+clarityValue;
         return value;
     }
 
-    public double getCategory() {
-        return category;
+    public int getClarity() {
+        return clarityValue;
     }
 
     public String getName() {
@@ -36,6 +36,11 @@ public class Sapphire extends Mineral{
         String categoryName;
         if(category == 1) categoryName = "precious stone";
         else categoryName = "semiprecious stone";
-        System.out.println("CATEGORY: " + categoryName + " GEMSTONE: " + name + " CARAT: " + carat + " COLOR: " + Mineral.getColor(colorValue) + " CLARITY: " + clarityValue);
+        System.out.println("CATEGORY: " + categoryName + " GEMSTONE: " + name + " CARAT: " + carat + " COLOR: "
+                + Mineral.getColor(colorValue) + " CLARITY: " + clarityValue + " Value: " + getValue()*100 + " $");
+    }
+
+    public int compareTo(Mineral o) {
+        return getValue().compareTo(o.getValue());
     }
 }
